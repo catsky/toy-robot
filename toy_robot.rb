@@ -51,15 +51,16 @@ class ToyRobot
   end
 
   def report
-    puts "#{@x}, #{@y}, #{@f}"
+    "#{@x}, #{@y}, #{@f}"
   end
 
   def place(x, y, facing)
-    if valid_position?(x, y)
-      @x = x
-      @y = y
-      @f = facing
-    end
+    x, y = x.to_i, y.to_i
+    return nil unless valid_position?(x, y) && valid_facing?(facing)
+
+    @x = x
+    @y = y
+    @f = facing
   end
 
   def get_next_position
@@ -82,5 +83,9 @@ class ToyRobot
     valid_x = x >= 0 && x <= MAX_LENGTH
     valid_y = y >= 0 && y <= MAX_WIDTH
     valid_x && valid_y
+  end
+
+  def valid_facing?(f)
+    FACEINGS.include? f
   end
 end
