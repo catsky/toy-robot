@@ -15,32 +15,29 @@ class ToyRobot
   end
 
   def left
-    if started?
-      cur_facing_index = FACEINGS.index(@f)
-      # counterclockwise direction
-      left_turn_step = 1
-      next_facing_index = cur_facing_index - left_turn_step
-      @f = FACEINGS[next_facing_index]
-    else
-      puts 'Left command skipped'
-    end
+    return unless started?
+
+    cur_facing_index = FACEINGS.index(@f)
+    # counterclockwise direction
+    left_turn_step = 1
+    next_facing_index = cur_facing_index - left_turn_step
+    @f = FACEINGS[next_facing_index]
   end
 
   def right
-    if started?
-      cur_facing_index = FACEINGS.index(@f)
-      # clockwise direction
-      right_turn_step = 1
-      max_facings_index = 3
-      next_facing_index = cur_facing_index == max_facings_index ? 0 : current_facing_index + right_turn_step
-      @f = FACEINGS[next_facing_index]
-    else
-      puts 'Right command skipped'
-    end
+    return unless started?
+
+    cur_facing_index = FACEINGS.index(@f)
+    # clockwise direction
+    right_turn_step = 1
+    max_facings_index = 3
+    next_facing_index = cur_facing_index == max_facings_index ? 0 : cur_facing_index + right_turn_step
+    @f = FACEINGS[next_facing_index]
   end
 
   def move
-    puts 'Move command skipped' unless started?
+    return unless started?
+
     next_x, next_y = get_next_position
     if valid_position? next_x, next_y
       @x = next_x
@@ -51,11 +48,12 @@ class ToyRobot
   end
 
   def report
-    "#{@x}, #{@y}, #{@f}"
+    "#{@x}, #{@y}, #{@f}" if started?
   end
 
   def place(x, y, facing)
-    x, y = x.to_i, y.to_i
+    x = x.to_i
+    y = y.to_i
     return nil unless valid_position?(x, y) && valid_facing?(facing)
 
     @x = x

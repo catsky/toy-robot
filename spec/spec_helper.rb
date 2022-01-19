@@ -1,1 +1,2 @@
-require_relative '../toy_robot.rb'
+require_relative '../lib/toy_robot'
+require_relative '../play'
